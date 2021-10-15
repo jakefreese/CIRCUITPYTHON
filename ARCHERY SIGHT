@@ -1,33 +1,38 @@
-""" ARCHERY SIGHT LIGHT, DIMMABLE, COLOR CHANGE, AUTO OFF TIME, AUTO ON WITH MOTION """
-# Push button for light control, short push change color, long push dim LED 
-# Auto off after 5 minutes of no motion, auto on with motion
+//""" ARCHERY SIGHT LIGHT, DIMMABLE, COLOR CHANGE, AUTO OFF TIME, AUTO ON WITH MOTION """
+// Push button for light control, short push change color, long push dim LED 
+// Auto off after 5 minutes of no motion, auto on with motion
 
 import time 
 import board
 from adafruit_debouncer import Debouncer 
 from digitalio import DigitalInOut, Direction, Pull
 
-# LED setup.
+//# LED setup.
 led = DigitalInOut(board.LED)
-# External LED will be utilized
+//# External LED will be utilized
 led.direction = Direction.OUTPUT
-# Turn on LED when wakes up
+LEDr = led[0] = (255,0,0)
+LEDg = led[0] = (0,255,0)
+LEDb = led[0] = (0,0,255)
+
+// Turn on LED when wakes up
 led = true
 
-# button setup, will use switch built into board
-button = DigitalInOut(board.XX)  need to figure out what pins for switch
-button.direction = Direction.INPUT
-button.pull = Pull.DOWN
+// button setup, will use switch built into board
+button1 = DigitalInOut(board.XX)  need to figure out what pins for switch
+button1.direction = Direction.INPUT
+button1.pull = Pull.DOWN
 
-# Accelerometer setup
-# Accelerometer wakes up system and turns on LED, need motion in the vertical axis to wake
-# After 30 minutes of no activity the LED will turn off, go back to low power mode.
+// Accelerometer setup
+// Accelerometer wakes up system and turns on LED, need motion in the vertical axis to wake
+// After 30 minutes of no activity the LED will turn off, go back to low power mode.
 
 while True:
-    # SHORT press will change color 
-    # LONG press will increase LED brightness to 100%, then back to 20% then increase 
-    
-      if button.value:
+    // SHORT press will change color 
+    // LONG press will increase LED brightness to 100%, then back to 10% then increase 
+   
+   // Color change 
+      if button1.value(LOW):
           led[0] = (255,0,0)
           
           led[0] = (0,255,0)
@@ -35,6 +40,11 @@ while True:
           led[0] = (0,0,255)
           
           led[0] = (255,255,255)
+          
+   # Dimming control
+      if button.value true // Greater than 1 second, then each second +10 until 100, then back to 10
+      
+      x;  
           
           
            #debounce delay need to get rid of "sleep" function
