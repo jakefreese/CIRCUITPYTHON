@@ -1,0 +1,50 @@
+import board
+from digitalio import DigitalInOut, Direction, Pull
+from analogio import AnalogOut, AnalogIn
+import touchio
+import adafruit_dotstar as dotstar
+import time
+
+
+dot = dotstar.DotStar(board.APA102_SCK, board.APA102_MOSI, 1)
+dot.brightness = 0.5
+
+# def LRED():
+    
+# def LGRN():
+    
+# def LBLU():
+    
+def countup():
+    global counter
+    counter = (counter + 1) % len(LEDC)   
+counter = 0
+LEDC = ["LRED, LGRN, LBLU"] 
+
+RED = (255, 0, 0)
+GRN = (0, 255, 0)
+BLU = (0, 0, 255)
+
+analog1in = AnalogIn(board.D0)
+aout = AnalogOut(board.D1)
+
+button = DigitalInOut(board.D2)
+button.direction = Direction.INPUT
+button.pull = Pull.UP
+
+touch1 = touchio.TouchIn(board.D3)
+touch2 = touchio.TouchIn(board.D1)
+
+countup()
+
+
+while True:
+    if touch1.value:
+        counter += 1
+        print(counter)
+        print(LEDC[counter])
+        LEDC[counter]()
+        dot[0] = RED
+        time.sleep(0.2)
+        
+    
