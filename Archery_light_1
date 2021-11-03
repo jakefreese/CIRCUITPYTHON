@@ -8,19 +8,12 @@ import time
 
 dot = dotstar.DotStar(board.APA102_SCK, board.APA102_MOSI, 1)
 dot.brightness = 0.5
-
-# def LRED():
-    
-# def LGRN():
-    
-# def LBLU():
     
 def countup():
     global counter
     counter = (counter + 1) % len(LEDC)   
 counter = 0
-LEDC = ["LRED, LGRN, LBLU"] 
-
+LEDC = [RED, GRN, BLU] 
 RED = (255, 0, 0)
 GRN = (0, 255, 0)
 BLU = (0, 0, 255)
@@ -35,6 +28,17 @@ button.pull = Pull.UP
 touch1 = touchio.TouchIn(board.D3)
 touch2 = touchio.TouchIn(board.D1)
 
+# event for touch input to change color of LED 
+
+while True:
+    
+    start_time = time.monotonic()
+    for i in range (len(NEED VARIABLE)):
+         # turn on dot if time between 0.2-0.8 seconds
+         # change color if an additional touch for same period
+         # cycle through list of colors for each seperate touch
+         
+    
 countup()
 
 
@@ -47,4 +51,8 @@ while True:
         dot[0] = RED
         time.sleep(0.2)
         
+    elapsed_time = time.monotonic() - start time 
+    if elapsed time > 0.2 < 0.8:
+    dot[0] list of colors
+    
     
