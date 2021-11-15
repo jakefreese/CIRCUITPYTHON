@@ -1,0 +1,84 @@
+import time
+from setup import check, led
+import board
+from digitalio import DigitalInOut, Direction, Pull
+from analogio import AnalogOut, AnalogIn
+import touchio
+import adafruit_dotstar as dotstar
+import random
+
+dot = dotstar.DotStar(board.APA102_SCK, board.APA102_MOSI, 1)
+dot.brightness = 0.5
+
+analog1in = AnalogIn(board.D0)
+aout = AnalogOut(board.D1)
+
+button = DigitalInOut(board.D2)
+button.direction = Direction.INPUT
+button.pull = Pull.UP
+
+touch1 = touchio.TouchIn(board.D3)
+touch2 = touchio.TouchIn(board.D1)
+
+class State:
+    _debounce = 0.2
+
+    def __init__(self):
+        self.touch1 = False
+        self.touch2 = False
+        self.led = False
+        self.dot = False
+        self.color = (255, 255, 255)
+        self.last_color = (255, 255, 255)
+        self.checkin = time.monotonic()
+
+    def random_color(self):
+        print("Generating random color")
+        self.color = (
+             random.randrange(0, 255),
+             random.randrange(0, 255),
+             random.randrange(0, 255)
+        )
+
+    def update(self):
+        if time.monotonic() - self.checkin > self._debounce:
+            self.touch1 = check("A")
+
+            # touch 2  was pressed
+            if not self.touch2 and check("B"):
+                print("B touched")
+                self.random_color()
+                self.touch2 = True
+            else:
+                self.touch2 = False
+
+            self.checkin = time.monotonic()
+
+            if self.touch1:
+                print("LED on")
+                self.led = True
+            else:
+                self.led = False
+
+            if self.touch2:
+                print("DOT on. Color: {}".format(self.color))
+                self.dot = True
+            else:
+                self.dot = False
+
+    def __repr__(self):
+        return "<Buttons: {}, Color: {}>".format(self.touch1, self.color)
+
+state = State()
+
+while True:
+    # update the state
+    state.update()
+
+    # take action - do things that cause side effects
+    led.value = state.led
+
+    if state.dot:
+        dot[0] = state.color
+    else:
+        dot[0] = (0, 0, 0)  # Write your code here :-)
