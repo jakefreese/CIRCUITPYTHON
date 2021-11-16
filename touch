@@ -1,0 +1,15 @@
+# Write your code here :-)
+"""CircuitPython Essentials Capacitive Touch on two pins example. Does not work on Trinket M0!"""
+import time
+import board
+import touchio
+
+touch_A0 = touchio.TouchIn(board.A0)  
+touch_A3 = touchio.TouchIn(board.A3) 
+
+while True:
+    if touch_A0.value:
+        print("Touched A1!")
+    if touch_A3.value:
+        print("Touched A2!")
+    time.sleep(0.05)
