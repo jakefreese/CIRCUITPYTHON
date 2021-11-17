@@ -1,0 +1,3 @@
+class Dot:
+  def__init__(self, dot_color)
+    self.dot_color = color
