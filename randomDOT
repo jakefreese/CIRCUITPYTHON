@@ -20,6 +20,12 @@ button.pull = Pull.UP
 touch1 = touchio.TouchIn(board.D3)
 touch2 = touchio.TouchIn(board.D1)
 
+def check(token):
+    if token == "A":
+        return not touch1.value
+    if token == "B":
+        return not touch2.value
+
 class State:
     _debounce = 0.2
 
